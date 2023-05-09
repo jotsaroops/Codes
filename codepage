@@ -1,0 +1,327 @@
+<?php
+
+$bg_id = false;
+
+if (is_singular()) {
+	$bg_id = get_post_meta(get_the_id(), "qt_customheader_bg", true);
+}
+
+if ((is_singular() || is_home() || is_front_page()) && (has_post_thumbnail() || $bg_id)) {
+	$bgurl = false;
+
+	if ($bg_id) {
+		$bgurl = wp_get_attachment_image_src($bg_id, 'full');
+		$bgurl = $bgurl[0];
+	}
+
+	if (!$bgurl) {
+		if (has_post_thumbnail()) {
+			$bgurl = get_the_post_thumbnail_url(get_the_id(), 'qantumthemes-xl');
+		}
+	}
+
+	if ($bgurl) {
+		?>
+<div class="qt-header-bg" id="qt-header-bg" data-bgimage="<?php echo esc_url($bgurl); ?>" data-bgattachment="" data-parallax="1">
+
+</div>
+
+
+		<?php
+	}
+} else {
+	$image_from_customizer = get_theme_mod('qt_header_backgroundimage', '');
+
+	if (is_category() || is_tax('podcastfilter') || is_tax('eventtype')) {
+
+		if (is_category()) {
+			// $category = get_category( get_query_var( 'cat' ) );
+			$catid = get_query_var('cat');
+		}
+
+		if (is_tax('podcastfilter')) {
+			$slug = get_query_var('podcastfilter');
+			$term = get_term_by('slug', $slug, 'podcastfilter');
+			$catid = $term->term_id;
+		} else if (is_tax('eventtype')) {
+			$slug = get_query_var('eventtype');
+			$term = get_term_by('slug', $slug, 'eventtype');
+			$catid = $term->term_id;
+		}
+
+		if (!empty($catid)) {
+			$image_id = get_term_meta($catid, 'qt_category_img_id', true);
+			if ($image_id) {
+				$image_from_customizer = wp_get_attachment_url($image_id, 'full');
+			}
+		}
+	}
+
+if ($image_from_customizer != '') {
+
+$bgurl = 'https://kissintime.adishaktinet.com/radio/shoutcast/images/recover.jpg'; // Reemplaza esta URL con la URL de la imagen que desees.
+		?>
+
+<div class="qt-header-bg" id="header-bg" data-bgimage="<?php echo esc_url($bgurl); ?>" data-bgattachment="" data-parallax="1"></div>
+
+<div id="maxim-a">
+
+<ul>
+<li id="textocolores" class="left qt-compact-player">
+<p><span class="qtFeedPlayerTrack color-title arribatodas"></span>
+<span class="qtFeedPlayerAuthor color-art arribatodas"></span></p>
+</li>
+</ul>
+
+<div title="give us support !!" id="donar" class="donate arribatodas" ><a target="_blank" href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=ARGZG287ANU7Y">donate</a> </div>
+<div id="pwd" class="pwdd arribatodas" title="Jot Saroop Singh"><p><a target="_blank" href="https://www.facebook.com/youfiel">Powered by JSS</a></p></div>
+</div>
+		<?php
+	}
+}
+?>
+
+
+
+
+<style>
+.qt-header-bg {
+    background-size: cover;
+    background-repeat: no-repeat;
+    animation: pulsate 20000ms infinite;}
+	
+@keyframes pulsate {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.10);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+@keyframes grow {
+    0% {
+        transform: scale(1);
+    }
+    60% {
+        transform: scale(50);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+.qt-header-bg:hover {
+    animation-play-state: paused;
+}
+
+.qt-header-bg.animated {
+    animation: grow 3000ms;
+    animation-fill-mode: forwards;
+}
+
+
+#maxim-a{
+	position: absolute;
+	z-index: 1;
+	height: 100px;
+	width: 100%;
+	bottom: 0px;
+	left: 0px;
+
+}
+
+.pwdd{
+	width:101px;
+	height:23px;
+	position:absolute;
+	z-index:10002;
+	right: 9px;
+	bottom: 8px;
+	cursor:pointer;
+	padding-top: 3px;
+	padding-bottom: 2px;
+	padding-right: 0px;
+	margin-left: 0px;
+	font-size: 13px;
+	font-family:'Khand', sans-serif !important; 
+    text-shadow: 1px 2px 1px rgba(24, 17, 17, 0.75);
+	color: rgb(91, 238, 48) !important;/*	box-shadow: #111 1px 1px 10px;*/
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	will-change: padding;
+	vertical-align: baseline;
+	line-height: inherit;
+	list-style: none	
+}
+
+
+.pwdd a{
+	font-family:'Khand', sans-serif !important; 
+	font-size:18px;
+	text-shadow: 1px 2px 1px #000000;
+	color: rgb(247 225 145) !important ;/*		box-shadow: #111 1px 1px 10px;*/
+}
+.donate{
+	width:80px;
+	height:35px;
+	position:absolute;
+	z-index:10002;
+	right: 8px;
+	bottom: 19px;
+	cursor:pointer;
+	padding: 0px;
+	margin-top: 0px;
+	margin-right: 0px;
+	margin-bottom: 0px;
+	margin-left: 0px;
+/*	text-shadow: 1px 2px 1px rgb(91, 238, 48);*/
+	color: rgb(91, 238, 48) !important;		
+/*	box-shadow: #111 1px 1px 10px;*/
+}
+
+.donate a{
+	font-family:'Khand', sans-serif !important; 
+	font-size:19px;
+    text-shadow: 1px 2px 1px #000000;
+	color: rgb(91, 238, 48) !important;
+/*		box-shadow: #111 1px 1px 10px;*/
+	margin-left: 3px;
+	
+}
+
+.donate:before {
+	content: "\e911";
+	font-family: Entypo;
+    font-style: normal;
+    text-decoration: inherit;
+	font-size: 28px;
+	font-weight: 500;
+	text-shadow: 1px 2px 1px rgba(24, 17, 17, 0.75);
+
+}
+.arribatodas { text-transform: uppercase;}  
+
+
+.color-title{
+	position: absolute;
+	z-index: 2;
+	height: 40px;
+	width: 100%;
+	bottom: 28px;
+	left: 0px;
+	font-family: 'Khand', sans-serif !important;
+	font-style: normal;
+	font-size:45px;
+	font-weight: normal;
+	padding-left: 8px;
+	padding-top: 0px;
+	padding-right: 120px;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	text-shadow: 1px 2px 1px #000000;	
+	white-space: nowrap;
+	will-change: padding;
+	vertical-align: baseline;
+	line-height: inherit;
+	list-style: none;
+	color: #FFF;
+	text-align: left !important;
+}
+
+
+.color-art{
+	position: absolute;
+	z-index: 2;
+	height: 38px;
+	width: 100%;
+	bottom: 2px;
+	left: 0px;
+	font-family: 'Khand', sans-serif !important;
+	font-style: normal;
+	font-size:30px;
+	font-weight: normal;
+	padding-left: 8px;
+	padding-bottom: 0px;
+	padding-top: 0px;
+	padding-right: 120px;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	text-shadow: 1px 2px 1px #000000;
+	white-space: nowrap;
+	will-change: padding;
+	vertical-align: baseline;
+	line-height: inherit;
+	list-style: none;
+	color: #FFF;
+	text-align: left !important;
+}
+
+@media screen and (max-width: 1199px) { .color-title{ font-size:30px;top:8px; } .color-art{ font-size:24px;top:36px;} }
+@media screen and (max-width: 450px) { .color-title{ font-size:28px; } .color-art{ font-size:20px;top:35px; } }
+
+</style>
+
+
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function(){
+        
+        // Función para cargar la imagen y hacer la transición suave
+function changeBackgroundImage(url){
+    var $bg = $('#header-bg');
+    $bg.fadeTo(500, 0.2, function(){
+        $bg.css('background-image', 'url('+url+')');
+        $bg.fadeTo(500, 1);
+    });
+}
+        
+        // Función para comprobar el tamaño de la imagen en intervalos regulares
+        var previousSize = 0;
+        var firstCheck = true;
+function checkSize() {
+  $.ajax({
+    url: 'https://kissintime.adishaktinet.com/radio/shoutcast/images/recover.jpg',
+    cache: false,
+    success: function(data) {
+      var currentSize = data.length;
+      console.log("Recover Size: " + currentSize);
+      if (!firstCheck && currentSize !== previousSize && currentSize > 0) { // Agrega la verificación aquí
+        console.log("Recover Size Glup");
+        changeBackgroundImage('https://kissintime.adishaktinet.com/radio/shoutcast/images/recover.jpg?' + new Date().getTime());
+      }
+      previousSize = currentSize;
+      firstCheck = false;
+    }
+  });
+}
+
+        // Comenzar comprobación después de 5 segundos
+        setTimeout(function() {
+            checkSize();
+            setInterval(checkSize, 20000); // Comprobar cada 20 segundos
+        }, 5000);
+    });
+
+var headerBg = document.getElementById("header-bg");
+var animationCount = 0;
+
+function handleAnimationIteration() {
+    animationCount++;
+    if (animationCount === 3) {
+        headerBg.classList.add("animated");
+        setTimeout(function() {
+            headerBg.classList.remove("animated");
+            animationCount = 0;
+        }, 3000);
+    }
+}
+
+headerBg.addEventListener("animationiteration", handleAnimationIteration);
+	
+</script>
